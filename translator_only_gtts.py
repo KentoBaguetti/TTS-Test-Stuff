@@ -10,7 +10,6 @@ from silero_vad import get_speech_timestamps, read_audio, collect_chunks
 import torch
 import time
 
-# Load environment variables
 load_dotenv()
 
 if __name__ == "__main__":
@@ -25,7 +24,6 @@ if __name__ == "__main__":
         exit(1)
     print("OpenAI API key loaded successfully.")
 
-    # Supported languages
     languages = [
         ["english", "en"],
         ["german", "de"],
