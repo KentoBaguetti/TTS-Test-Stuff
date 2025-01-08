@@ -9,6 +9,7 @@ from silero_vad import get_speech_timestamps, read_audio, collect_chunks
 import torch
 import time
 from RealtimeTTS import TextToAudioStream, GTTSEngine, GTTSVoice
+import re
 
 load_dotenv()
 
@@ -39,6 +40,14 @@ if __name__ == "__main__":
         repo_or_dir="snakers4/silero-vad", model="silero_vad", force_reload=True
     )
     (get_speech_timestamps, save_audio, read_audio, VADIterator, collect_chunks) = utils
+
+    cache = {}
+
+    def sanitize_text(text: str) -> str:
+        text = text.replace("\n", " ")
+        text = re.sub(r"[^a-zA-Z0-9\s\.,\?!]", "", text)
+        text = re.sub(r"\s+", " ", text)
+        return text.strip()
 
     def generate_response(messages):
         """Generate assistant's response using OpenAI."""
